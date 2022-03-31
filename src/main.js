@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import ClientApp from './ClientApp.vue'
 import installElementPlus from './plugins/element'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-const app = createApp(App)
-installElementPlus(app)
-app.use(VueAxios,axios)
-app.mount('body')
+const clientapp = createApp(ClientApp)
+installElementPlus(clientapp)
+clientapp.use(VueAxios,axios)
+clientapp.mount('body')
