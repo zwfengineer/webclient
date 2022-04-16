@@ -13,5 +13,8 @@ module.exports = defineConfig({
       preProcessor: 'sass',
       patterns: []
     }
+  },
+  configureWebpack: {
+    devtool: 'source-map'
   }
 })

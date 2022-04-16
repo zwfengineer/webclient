@@ -52,15 +52,15 @@
 
 <script>
 import { onMounted, onUpdated, ref } from '@vue/runtime-core'
-import axios from 'axios'
-import {checkUser,checkPhoneNumber} from '@/lib/util'
+import {checkUser,checkPhoneNumber, baseAxios} from '@/lib/util'
 export default {
     name:"LoginView",
     data(){
         return{
             loginbuttondisable:false,
             registerbuttondisable:false,
-            loginboxstyle:null
+            loginboxstyle:null,
+            responsedata:null
         }
     },
     props:{
@@ -89,15 +89,22 @@ export default {
                 this.loginbuttondisable = false
                 return "falid"
             }
-            this.LoginAxios.post('/login',data)
+            this.baseAxios.post('/login',data)
             .then((response)=>{
                 // alert(JSON.stringify(response.data))
                 this.loginbuttondisable = false
                 if(response.data.Logined)   
                 {
-                    this.back()
+                    this.responsedata = response.data   
+                    this.back(this)
+                }else{
+                    alert(response.data)
                 }             
-            })
+            }).finally(()=>{
+                this.loginbuttondisable=false
+            }).catch((err) => {
+              alert(err)  
+            });
         },
         register(){ 
             this.registerbuttondisable = true
@@ -115,11 +122,12 @@ export default {
                     return "faild phonenum"
                 }
             }
-            this.LoginAxios.post('/register',data)
+            this.baseAxios.post('/register',data)
             .then((response)=>{
                 this.registerbuttondisable = false
                 console.log(response.data.Registed)
                 if (response.data.Registed){
+                    alert("注册成功！")
                     this.r2l()
                 }else{
                     alert(JSON.stringify(response.data))
@@ -129,9 +137,7 @@ export default {
         },
     },
     setup() {
-        const LoginAxios = axios.create({baseURL:"http://localhost:1258"})
-        LoginAxios.defaults.headers.post['Content-Type'] = 'application/json'
-        LoginAxios.defaults.withCredentials = true;
+        baseAxios.defaults.headers.post['Content-Type'] = 'application/json'
         const data = ref({
             country:'CN',
             title:"登录",
@@ -149,29 +155,26 @@ export default {
                 password:"",
                 gender:"",
                 phonenum:"",
-                image:"https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+                image:"",
             },
             vfcode:{
                 display:"none"
             }
         })
         onMounted(()=>{
-            data.value.user.image="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"
+            data.value.user.image=require("../assets/defaultuser/0.jpg")
             data.value.user.gender="保密"
             console.log(data.value.user.image)
         })
-        onUpdated(()=>{
-            console.log(data.value.user.gender)
-        })
         return{
             data,
-            LoginAxios
+            baseAxios
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
 #loginpadding{
     padding-top: 10%;
 }

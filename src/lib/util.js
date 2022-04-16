@@ -1,4 +1,22 @@
+import axios from "axios"
+import Cookies from "js-cookie"
 import parsePhoneNumber from "libphonenumber-js/max"
+const host = "192.168.10.1:1258"
+const protol ={
+    ws:"ws://",
+    http:"http://",
+    wss:"wss://",
+    https:"https://",
+}
+const logoutevent = new Event('logout')
+const baseAxios = axios.create({baseURL:"http://"+host})
+const cookie= {
+    get: (name) => Cookies.get(name),
+    set: (name, value, options) => Cookies.set(name, value, options),
+    remove: (name, options) => Cookies.remove(name, options),
+    getAll: () => Cookies.get()
+}
+baseAxios.defaults.withCredentials = true;
 
 function checkPhoneNumber(Number,country) {
     let errorlist = new Array()
@@ -35,9 +53,38 @@ function checkUser(data){
     return true
 }
 
+function getavatarsrc(avatar) {
+    if(avatar!=undefined){
+        return require('../assets/defaultuser/'+avatar+".jpg")
+    }else{
+        return require('../assets/defaultuser/'+2+".jpg");
+    }
+}
+function logout() {
+    baseAxios.post("/logout")
+    .then((response)=>{
+        if (response.status = 200){
+            cookie.remove("Login"),
+            cookie.remove('user'),
+            dispatchEvent(logoutevent)
+        }
+    })
+    .catch((err) => {
+       console.log(err)
+    });
+}
+
+
+
 
 
 export{
     checkUser,
-    checkPhoneNumber
+    checkPhoneNumber,
+    getavatarsrc,
+    baseAxios,
+    host,
+    protol,
+    logout,
+    cookie
 }
