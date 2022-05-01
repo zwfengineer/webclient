@@ -1,4 +1,4 @@
-import { host,protol } from "./util"; 
+import { host,protol,wsoffline,wsmessage} from "./util"; 
 const wsclients = {
     wsc:WebSocket,
     path:String,
@@ -11,11 +11,19 @@ const wsclients = {
             this.wsc =new WebSocket(protol.ws + host + path)
             this.wsc.addEventListener('close',(error)=>{
                 this.openlink.delete(this.path)
-                console.log(error)
+                dispatchEvent(wsoffline(error.code))
                 //匿名函数才能访问上级的对象
             })
             this.wsc.addEventListener('open',()=>{
             })
+            this.wsc.onmessage=(msg)=>{
+                dispatchEvent(wsmessage(JSON.parse(msg.data)))
+                let data = JSON.parse(msg.data)
+                console.log(data)
+                if (data.messageType != 'Heart'){
+                    console.log(data)
+                }
+            } 
             this.openlink.set(path,this)
             return this.wsc
         }else{

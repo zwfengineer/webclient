@@ -43,10 +43,10 @@ export default {
       this.wsclient = wsclients.create("/wsapi")
       this.wsclient.onopen = ()=>{
         console.log("user:",this.user.userName,"connect to server")
-      }
-      this.wsclient.onmessage = (message)=>{
-        console.log(this.user.userName,':',message)
-      }
+        }
+      addEventListener('wsmessage',(data)=>{
+        // console.log(data.detail)
+      })
       // window.wsclient =this.wsclient;
     },
   },
@@ -58,13 +58,28 @@ export default {
       this.login= true
       this.user = JSON.parse(cookie.get("user"))
       console.log(cookie.get("user"),(this.user))
-      this.wsclient = wsclients.create('/wsapi')
+      this.connect()
     }
     window.vue = toRaw(this)
     addEventListener('logout',()=>{
       console.log("logout Event ::")
       this.user=null
       this.login=null 
+    })
+    addEventListener('wsoffline',(data)=>{
+      if(data.detail == '1000'){
+        this.user=null
+        this.login=null
+      }
+      if(data.detail == '4000'){
+        alert("Waring User Repeat")
+        this.user=null
+        this.login=null
+      }
+      if(data.detail == '1001'){
+        this.user=null
+        this.login=null
+      }
     })
     // 调试
   },

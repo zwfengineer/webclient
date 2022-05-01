@@ -9,14 +9,33 @@ const protol ={
     https:"https://",
 }
 const logoutevent = new Event('logout')
-const baseAxios = axios.create({baseURL:"http://"+host})
+const baseAxios = axios.create({
+    baseURL:"http://"+host,
+    withCredentials:true,
+ })
 const cookie= {
     get: (name) => Cookies.get(name),
     set: (name, value, options) => Cookies.set(name, value, options),
     remove: (name, options) => Cookies.remove(name, options),
     getAll: () => Cookies.get()
 }
-baseAxios.defaults.withCredentials = true;
+
+function friendlistevent(data) {
+    return new CustomEvent("friendlistevent",{
+        detail:data
+    })
+}
+function wsoffline(data){
+    return new CustomEvent('wsoffline',{
+        detail:data
+    })
+}
+
+function wsmessage(data){
+    return new CustomEvent('wsmessage',{
+        detail:data
+    })
+}
 
 function checkPhoneNumber(Number,country) {
     let errorlist = new Array()
@@ -63,15 +82,16 @@ function getavatarsrc(avatar) {
 function logout() {
     baseAxios.post("/logout")
     .then((response)=>{
-        if (response.status = 200){
-            cookie.remove("Login"),
-            cookie.remove('user'),
-            dispatchEvent(logoutevent)
-        }
+        cookie.remove("Logined")
+        cookie.remove('user')
+        console.log(response)
+        dispatchEvent(logoutevent)
+    }).catch((ERR)=>{
+        cookie.remove("Logined")
+        cookie.remove('user')
+        console.log(ERR)
+        dispatchEvent(logoutevent)
     })
-    .catch((err) => {
-       console.log(err)
-    });
 }
 
 
@@ -86,5 +106,8 @@ export{
     host,
     protol,
     logout,
-    cookie
+    cookie,
+    friendlistevent,
+    wsoffline,
+    wsmessage
 }

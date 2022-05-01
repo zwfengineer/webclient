@@ -9,10 +9,7 @@
         </div>
         <div class="main">
             <div class="left">
-                <friendlist
-                :getfriends="getfriendlist"
-                :friendlist="friendlist"
-                ></friendlist>
+                <Menu></Menu>
             </div>
             <div class="center">
                 <span></span>
@@ -29,22 +26,25 @@
 <script>
 import Topbar from './Topbar.vue'
 import { toRaw } from '@vue/reactivity'
-import { baseAxios } from '@/lib/util'
+import { baseAxios, cookie, logout } from '@/lib/util'
 import Friendlist from './Friendlist.vue'
+import Menu from "./Menu.vue"
 import { wsclients } from '@/lib/websocketutil'
 export default {
     name:'MainView',
     components:{
         Topbar,
         Friendlist,
+        Menu
     },
     props:{
         back:null,
+        friendlist:null,
+
     },
     data(){
         return{
             user:Object,
-            friendlist:null,
             wsclient:null
         }
     },
@@ -53,24 +53,18 @@ export default {
         this.wsclient = wsclients.create("/wsapi") 
     }, 
     updated(){
-        console.log("Updated")
-        console.log(this.$data.user)
     },
-    setup(){
-        baseAxios.defaults.headers.post['Content-Type'] = 'application/json'
-        return{
-            baseAxios
-        }
+    setup(props){
+        addEventListener('friendlistevent',data=>{
+            props.friendlist = data.detail
+            console.log(data.detail)
+        })
+        addEventListener('wsoffline',data=>{
+            console.log('catch wsoffline:::',data.detail)
+            window.detail = data.detail
+        })
     },
     methods:{
-        getfriendlist(){
-            this.baseAxios.post("/getfriendlist")
-            .then((response) => {
-                if (response.status==200){
-                    this.friendlist = response.data
-                }
-            });
-        },
     }
 }
 </script>

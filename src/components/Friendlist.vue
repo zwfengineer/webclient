@@ -1,18 +1,23 @@
 <template>
-    <div>    
+    <div class="friendlistbox">    
         <li v-for = "friend in friendlist" :key="friend">
             {{friend.username}}
-        </li>
+        </li>  
     </div>
 </template>
 <script>
+import {getfriendlist} from '@/lib/axiosutil'
 export default {
-    props:{
-        getfriends:null,
-        friendlist:null
-    },
+    name:"Friendlist",
+    data(){
+        return{
+            friendlist:null 
+        }
+    }, 
     mounted(){
-        this.getfriends()
+        getfriendlist((data)=>{
+            this.friendlist = data 
+        })
     },
 }
 </script>
@@ -23,8 +28,10 @@ export default {
     margin:0;
     display: inline-block;
 }
-div{
-    margin-left: 20%;
-    margin-top: 5%;
+.friendlistbox{
+    border-style: solid;
+    border-width: 1px;
+    height: 100%;
 }
+
 </style>

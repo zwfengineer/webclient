@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { onMounted, onUpdated, ref } from '@vue/runtime-core'
+import { onMounted, ref } from '@vue/runtime-core'
 import {checkUser,checkPhoneNumber, baseAxios} from '@/lib/util'
 export default {
     name:"LoginView",
@@ -96,6 +96,7 @@ export default {
                 if(response.data.Logined)   
                 {
                     this.responsedata = response.data   
+                    console.log(response)
                     this.back(this)
                 }else{
                     alert(response.data)
