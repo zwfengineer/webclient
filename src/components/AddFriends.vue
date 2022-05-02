@@ -4,6 +4,7 @@
     title="添加友好用户"
     width="85%"
     :before-close="handleClose"
+    :show-close="false"
     >
     <div style="margin-bottom: 30px">
       <span>你可以输入用户名或UID 进行搜索</span>
@@ -33,7 +34,6 @@
     </div>
     <template #footer>
       <span class="dialog-footer">
-        <!-- <el-button  type="primary" @click="addfriend">添加好友</el-button> -->
         <el-button @click="dialogVisible = false" >Cancel</el-button>
       </span>
     </template>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import {toRaw, watch} from '@vue/runtime-core';
+import { watch} from '@vue/runtime-core';
 import {searchFriends} from '@/lib/axiosutil';
 import { cookie } from '@/lib/util';
 export default {
@@ -61,6 +61,7 @@ export default {
     },
     methods:{
       handleClose(done) {
+        this.dialogVisible = false  
       },
       search(){
         console.log("ENTER",this.entered)
@@ -78,7 +79,7 @@ export default {
       addfriend(row){
          
       },
-      // 过滤自己
+      // 过滤当前用户
       filterself(data){
         let user = JSON.parse(cookie.get("user"))
         let friends = new Array();

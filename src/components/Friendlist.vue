@@ -3,6 +3,9 @@
         <li v-for = "friend in friendlist" :key="friend">
             {{friend.username}}
         </li>  
+        <div v-if="nofriends">
+            <span>没得好友！</span>
+        </div>
     </div>
 </template>
 <script>
@@ -11,12 +14,20 @@ export default {
     name:"Friendlist",
     data(){
         return{
-            friendlist:null 
+            friendlist:null,
+            nofriends:true
         }
     }, 
     mounted(){
         getfriendlist((data)=>{
-            this.friendlist = data 
+            console.log(1,data)
+            if(data!=null){
+                this.friendlist = data 
+                this.nofriends=false
+            }else{
+                this.nofriends=true
+            }
+            
         })
     },
 }

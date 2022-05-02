@@ -19,7 +19,6 @@ const wsclients = {
             this.wsc.onmessage=(msg)=>{
                 dispatchEvent(wsmessage(JSON.parse(msg.data)))
                 let data = JSON.parse(msg.data)
-                console.log(data)
                 if (data.messageType != 'Heart'){
                     console.log(data)
                 }
