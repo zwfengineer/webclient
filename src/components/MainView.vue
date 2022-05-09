@@ -12,7 +12,7 @@
                 <Menu></Menu>
             </div>
             <div class="center">
-                <span></span>
+                <ChatManager></ChatManager>
             </div>
             <div class="right">
                 <span></span>
@@ -29,13 +29,15 @@ import { toRaw } from '@vue/reactivity'
 import { baseAxios, cookie, logout } from '@/lib/util'
 import Friendlist from './Friendlist.vue'
 import Menu from "./Menu.vue"
+import ChatManager from "./ChatManager.vue"
 import { wsclients } from '@/lib/websocketutil'
 export default {
     name:'MainView',
     components:{
         Topbar,
         Friendlist,
-        Menu
+        Menu,
+        ChatManager,
     },
     props:{
         back:null,
@@ -58,10 +60,6 @@ export default {
         addEventListener('friendlistevent',data=>{
             props.friendlist = data.detail
             console.log(data.detail)
-        })
-        addEventListener('wsoffline',data=>{
-            console.log('catch wsoffline:::',data.detail)
-            window.detail = data.detail
         })
     },
     methods:{
@@ -92,7 +90,7 @@ export default {
     overflow: hidden;
 }
 .center{
-    background-color: rgba($color: rgb(219, 106, 13), $alpha: 1.0);
+    background-color: rgba($color: rgb(255, 255, 255), $alpha: 1.0);
     height: 100%;
     width: 50%;
     display: inline-block;

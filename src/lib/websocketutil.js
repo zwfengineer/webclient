@@ -1,4 +1,5 @@
-import { host,protol,wsoffline,wsmessage} from "./util"; 
+import { Message } from "./sessionmanager";
+import { host,protol,wsoffline,wslinkerror,wsmessage, getuser,messageType, dataType} from "./util"; 
 const wsclients = {
     wsc:WebSocket,
     path:String,
@@ -8,13 +9,17 @@ const wsclients = {
         if (this.checkrepat(path)){
             console.log(protol.ws+host+path)
             this.path = path
-            this.wsc =new WebSocket(protol.ws + host + path)
+            this.wsc =new WebSocket(protol.wss + host + path)
             this.wsc.addEventListener('close',(error)=>{
                 this.openlink.delete(this.path)
                 dispatchEvent(wsoffline(error.code))
                 //匿名函数才能访问上级的对象
             })
             this.wsc.addEventListener('open',()=>{
+            })
+            this.wsc.addEventListener("error",(error)=>{
+                console.log(error)
+                dispatchEvent(wslinkerror(error.code))
             })
             this.wsc.onmessage=(msg)=>{
                 dispatchEvent(wsmessage(JSON.parse(msg.data)))
@@ -23,10 +28,10 @@ const wsclients = {
                     console.log(data)
                 }
             } 
-            this.openlink.set(path,this)
-            return this.wsc
+            this.openlink.set(path,this) 
+            return this.wsc 
         }else{
-            return this.openlink.get(path).wsc
+            return  this.openlink.get(path).wsc
         }
     },
     checkrepat(path){
@@ -38,7 +43,25 @@ const wsclients = {
         return true
     },
 }
+function post(data,fid){
+    server = wsclients.create("/wsapi")
+    server.send()
+}
+function postaddfriendrequest(data,fid){
+    let server = wsclients.create("/wsapi")
+    let message = new Message()
+    message.data = data
+    message.from = getuser().uid
+    message.messageType = messageType.AddFriendRequest
+    message.unixTime = new Date()
+    message.to = fid
+    message.dataType = dataType.Text
+    console.log(data,fid,JSON.stringify(message))
+    server.send(JSON.stringify(message))
+}
 
 export{
-    wsclients
+    wsclients,
+    post,
+    postaddfriendrequest,
 }

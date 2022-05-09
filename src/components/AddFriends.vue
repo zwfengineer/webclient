@@ -22,13 +22,13 @@
         ref="tableref" 
         :data="tabledata"
         highlight-current-row 
-        @current-change="addfriend"
+        @current-change="changefid"
         border 
         style="width:100%; max-height:100vh;">
           <el-table-column prop="username" label="名称"></el-table-column>
           <el-table-column prop="uid" label="id"></el-table-column>
           <el-table-column v-if="tabledata!=null" width="80px">
-            <el-button type = "primary"><unicon name = "plus" fill="blue"></unicon></el-button>
+            <el-button type = "primary" @click="addfriend"><unicon name = "plus" fill="blue"></unicon></el-button>
           </el-table-column>
         </el-table>
     </div>
@@ -38,12 +38,29 @@
       </span>
     </template>
   </el-dialog>
+
+  <el-dialog
+  v-model="infovisable"
+  title="info"
+  :show-close="false"
+  >
+  <div>
+    <el-input v-model="requestmessage"></el-input>
+  </div>
+  <template #footer>
+    <span class="dialog-footer">
+      <el-button @click="infovisable = false" >Cancel</el-button>
+      <el-button @click="postinfo" >Post</el-button>
+    </span>
+  </template>
+  </el-dialog>
 </template>
 
 <script>
-import { watch} from '@vue/runtime-core';
+import { toRaw, watch} from '@vue/runtime-core';
 import {searchFriends} from '@/lib/axiosutil';
-import { cookie } from '@/lib/util';
+import { getuser } from '@/lib/util';
+import { postaddfriendrequest } from '@/lib/websocketutil';
 export default {
     name:'AddFriends',
     components:{
@@ -55,6 +72,9 @@ export default {
         searchdata:"",
         entered:false,
         tabledata:null,
+        infovisable:false,
+        requestmessage:null,
+        selectuser:null,
       }
     },
     setup(){
@@ -76,19 +96,28 @@ export default {
           })
         }
       },
-      addfriend(row){
-         
+      addfriend(){
+        this.infovisable = true
+      },
+      changefid(newval){
+        console.log(toRaw(newval))
+        this.selectuser = newval
       },
       // 过滤当前用户
       filterself(data){
-        let user = JSON.parse(cookie.get("user"))
-        let friends = new Array();
-        for(let friend of data){
-          if (friend.uid != user.uid){
-            friends.push(friend) 
+        let user = getuser()
+        let friends = new Array()
+        if (data!=null){
+          for(let friend of data){
+            if (friend.uid != user.uid){
+              friends.push(friend) 
+            }
           }
         }
         return friends
+      },
+      postinfo(){
+        postaddfriendrequest(this.requestmessage,this.selectuser.uid)
       }
     },
     mounted(){

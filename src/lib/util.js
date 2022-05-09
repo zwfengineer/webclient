@@ -10,7 +10,7 @@ const protol ={
 }
 const logoutevent = new Event('logout')
 const baseAxios = axios.create({
-    baseURL:"http://"+host,
+    baseURL:"https://"+host,
     withCredentials:true,
  })
 const cookie= {
@@ -20,6 +20,23 @@ const cookie= {
     getAll: () => Cookies.get()
 }
 
+const messageType={
+    Heart:"Heart",
+    UserMessage:"UserMessage",
+    SystemMessage:"SystemMessage",
+    AddFriendRequest:"AddFriendRequest",
+    DeliverFeedback:"DeliverFeedback"
+}
+const dataType={
+    Text:"Text",
+    FullText:"FullText",
+    Video:"Video",
+    OnlineVideo:"OnlineVideo",
+    Voice:"Voice",
+    OnlineVioce:"OnlineVoice"
+}
+
+
 function friendlistevent(data) {
     return new CustomEvent("friendlistevent",{
         detail:data
@@ -27,6 +44,12 @@ function friendlistevent(data) {
 }
 function wsoffline(data){
     return new CustomEvent('wsoffline',{
+        detail:data
+    })
+}
+
+function wslinkerror(data){
+    return new CustomEvent("wslinkerror",{
         detail:data
     })
 }
@@ -95,7 +118,9 @@ function logout() {
 }
 
 
-
+function getuser(){
+    return  JSON.parse(cookie.get("User"))
+}
 
 
 export{
@@ -109,5 +134,9 @@ export{
     cookie,
     friendlistevent,
     wsoffline,
-    wsmessage
+    wslinkerror,
+    wsmessage,
+    getuser,
+    messageType,
+    dataType
 }

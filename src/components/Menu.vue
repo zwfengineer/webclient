@@ -21,6 +21,7 @@
 import Friendlist from "./Friendlist.vue"
 import AddFriends from "./AddFriends.vue"
 import GroupList from "./GroupList.vue"
+import { getAddFriendList } from '@/lib/axiosutil'
 export default {
     name:"Menu",
     components:{

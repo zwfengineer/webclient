@@ -6,11 +6,14 @@
         <div v-if="nofriends">
             <span>没得好友！</span>
         </div>
+        <NoticeList></NoticeList>
     </div>
 </template>
 <script>
 import {getfriendlist} from '@/lib/axiosutil'
+import NoticeList from './NoticeList.vue'
 export default {
+  components: { NoticeList },
     name:"Friendlist",
     data(){
         return{
@@ -20,7 +23,7 @@ export default {
     }, 
     mounted(){
         getfriendlist((data)=>{
-            console.log(1,data)
+            console.log("Friendlist:23:",data)
             if(data!=null){
                 this.friendlist = data 
                 this.nofriends=false
@@ -30,6 +33,8 @@ export default {
             
         })
     },
+    methods:{
+    }
 }
 </script>
 

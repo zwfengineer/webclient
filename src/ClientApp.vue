@@ -35,7 +35,7 @@ export default {
       this.login=true
       this.user=toRaw(component.$data.responsedata)
       cookie.set("Logined",true)
-      cookie.set("user",JSON.stringify(toRaw(component.$data.responsedata))) 
+      cookie.set("User",JSON.stringify(toRaw(component.$data.responsedata))) 
       this.connect()
     },
     connect(){
@@ -49,6 +49,10 @@ export default {
       })
       // window.wsclient =this.wsclient;
     },
+    cleanCookie(){
+        cookie.remove("Logined")
+        cookie.remove("User")
+    }
   },
   setup(){
   },
@@ -56,8 +60,8 @@ export default {
     // 刷新重连
     if (cookie.get("Logined")){
       this.login= true
-      this.user = JSON.parse(cookie.get("user"))
-      console.log(cookie.get("user"),(this.user))
+      this.user = JSON.parse(cookie.get("User"))
+      console.log(cookie.get("User"),(this.user))
       this.connect()
     }
     window.vue = toRaw(this)
@@ -76,7 +80,18 @@ export default {
         this.user=null
         this.login=null
       }
+      if(data.detail == '4003'){
+        cookie.remove("Logined")
+        cookie.remove("User")
+        this.user=null
+        this.login=null
+        alert(data.detail)
+      }
       if(data.detail == '1001'){
+        this.user=null
+        this.login=null
+      }
+      if(data.detail == '1006'){
         this.user=null
         this.login=null
       }
