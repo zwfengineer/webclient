@@ -1,4 +1,4 @@
-import { baseAxios,friendlistevent} from "./util";
+import { baseAxios,flushfriendlist,friendlistevent} from "./util";
 function getfriendlist(callback) {
     baseAxios.post('/getfriendlist').then((response) => {
         if(response.status == 200){
@@ -17,12 +17,28 @@ function searchFriends(data,callback){
 
 function getAddFriendList(callback){
     baseAxios.post("/getAddFriendRequest").then((response)=>{
-        console.log(response);
+        console.log(response)
+        callback(response.data);
     })
+}
+
+function agreeAddFriendRequest(data,callback){
+    baseAxios.post("/addFriend",data)
+    .then((response)=>{
+        console.log(response)
+        if(response.status=200){
+            callback()
+            dispatchEvent(flushfriendlist())
+        }
+    })
+}
+function getHistoryMessage() {
+    
 }
 
 export{
     getfriendlist,
     searchFriends,
-    getAddFriendList
+    getAddFriendList,
+    agreeAddFriendRequest
 }

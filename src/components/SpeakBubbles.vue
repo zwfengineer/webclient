@@ -4,10 +4,12 @@
         <el-avatar
         size="small">
         </el-avatar>
-        {{session.name}}
+        {{message.from}}
     </div>
     <div class="bubbles">
-        <div>{{session.id}}11454144444444444</div>
+        <div>
+            {{message.data}}
+        </div>
     </div>
 </div>
 </template>
@@ -16,7 +18,7 @@
 export default {
     name:"SpeakBubbles",
     props:{
-        session:null
+        message:null
     },
     setup() {
         

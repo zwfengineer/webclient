@@ -1,5 +1,5 @@
 import { Message } from "./sessionmanager";
-import { host,protol,wsoffline,wslinkerror,wsmessage, getuser,messageType, dataType} from "./util"; 
+import { host,protol,wsoffline,wslinkerror,wsmessage, getuser,messageType, dataType, wsonline,addfriendevent,repeataddfriendrequestevent} from "./util"; 
 const wsclients = {
     wsc:WebSocket,
     path:String,
@@ -16,16 +16,30 @@ const wsclients = {
                 //匿名函数才能访问上级的对象
             })
             this.wsc.addEventListener('open',()=>{
+                dispatchEvent(wsonline())
             })
             this.wsc.addEventListener("error",(error)=>{
                 console.log(error)
                 dispatchEvent(wslinkerror(error.code))
             })
-            this.wsc.onmessage=(msg)=>{
+            this.wsc.onmessage=(msg)=>{ 
                 dispatchEvent(wsmessage(JSON.parse(msg.data)))
                 let data = JSON.parse(msg.data)
                 if (data.messageType != 'Heart'){
                     console.log(data)
+                }
+                if(data.messageType == 'ServerPush' && data.dataType == 'Directive'){
+                    switch (data.data) {
+                        case "addfriendevent":
+                            dispatchEvent(addfriendevent())
+                            break;
+                        case "addfriendrequestevent":
+                            dispatchEvent(repeataddfriendrequestevent())
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             } 
             this.openlink.set(path,this) 

@@ -60,6 +60,25 @@ function wsmessage(data){
     })
 }
 
+function wsonline(){
+    return new Event("wsonline")
+}
+
+function flushfriendlist() {
+    return new Event("flushfriendlist")
+}
+
+function flushnotice() {
+    return new Event("flushnotice")
+}
+
+function addfriendevent(){
+    return new Event("addfriendevent")
+}
+function repeataddfriendrequestevent(){
+    return new Event("repeataddfriendrequestevent")
+}
+
 function checkPhoneNumber(Number,country) {
     let errorlist = new Array()
     let phonenumber = parsePhoneNumber(Number,country)
@@ -103,17 +122,17 @@ function getavatarsrc(avatar) {
     }
 }
 function logout() {
+    dispatchEvent(logoutevent)
     baseAxios.post("/logout")
     .then((response)=>{
         cookie.remove("Logined")
         cookie.remove('user')
         console.log(response)
-        dispatchEvent(logoutevent)
     }).catch((ERR)=>{
         cookie.remove("Logined")
         cookie.remove('user')
         console.log(ERR)
-        dispatchEvent(logoutevent)
+        
     })
 }
 
@@ -134,8 +153,13 @@ export{
     cookie,
     friendlistevent,
     wsoffline,
+    wsonline,
     wslinkerror,
     wsmessage,
+    flushfriendlist,
+    flushnotice,
+    addfriendevent,
+    repeataddfriendrequestevent,
     getuser,
     messageType,
     dataType

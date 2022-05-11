@@ -25,7 +25,8 @@ class Session{
         this.name=name
         this.id=id
         this.dormancy = true
-    }
+        this.messages = new Array()
+    } 
     active(){
         activeSessions.set(this.id,this)
         dispatchEvent(sessionactive(this.id))
@@ -36,23 +37,16 @@ class Session{
     send(data){
         connnect = wsclients.create("/wsapi")
         connnect.send(data)
+        this.messages.push(data)
+    }
+    repeat(data){
+        this.messages.push(data)
     }
 }
-function clearall(){
-    while (true){
-        if (activeSessions.length>0){
-            activeSessions.pop()
-        }else{
-            break
-        }
-    }
-}
-
 export {
     activeSessions,
     Session,
     Message,
-    clearall,
     sessionactive,
     sessionDestory
 }

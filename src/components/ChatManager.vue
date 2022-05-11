@@ -5,28 +5,28 @@
     @tab-click="handleClick"
     @tab-remove="closesession"
     type="border-card"
+    class="tabs"
     >
         <el-tab-pane 
         v-for="(value) of sessions"
         :name = "value[0]" 
         :key = "value[1]" 
         closable
+        
         >
         <template  #label>
                 {{value[1].name}}
         </template>
-            <div>
-                <SpeakBubbles
-                :session="value[1]">
-                </SpeakBubbles>
-            </div>
+                <Chat
+                :friend="value[1]"
+                ></Chat>
         </el-tab-pane>
     </el-tabs>
 </div>
 </template>
 <script>
 import {activeSessions, clearall, Session, sessionDestory} from '@/lib/sessionmanager'
-import SpeakBubbles from './SpeakBubbles.vue'
+import Chat from '@/components/Chat.vue';
 import { toRaw } from '@vue/reactivity'
 export default {
     name:"ChatManager",
@@ -40,25 +40,20 @@ export default {
         }
     },
     components:{
-        SpeakBubbles
+        Chat
     },
     setup() { 
         console.log("setup")
-        clearall()
+        activeSessions.clear()
     },
     mounted(){           
         this.sessions = activeSessions
         addEventListener('sessionActive',(data)=>{
             this.sessionactive = true
             this.activename=data.detail
-            console.log(
-                'sessionactive',
-                this.sessionactive,
-                data.detail)
         })        
         addEventListener('sessionDestory',(data)=>{
             if(data.detail.data == this.activename ){
-                console.log(data.detail.index)
                 if(data.detail.index > activeSessions.size){  
                     activeSessions.forEach((value,key)=>{
                         this.activename = key
@@ -72,17 +67,10 @@ export default {
                 }
             }
         })
-        setInterval(() => {
-            let num = activeSessions.size+1
-            let session = new Session("b"+num,num)
-            session.active()
-            console.log(activeSessions)
-        }, 100000)        
-        for(let i = 1;i<6;i++){
-            let session = new Session("a"+i,i)
-            session.active()
-        }
         console.log(activeSessions) 
+        addEventListener("logout",()=>{
+            activeSessions.clear()
+        })
         
     },
     methods:{
@@ -133,3 +121,11 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .tabs > .el-tabs__content > .el-tab-pane{
+        height: 70vh;
+    }
+    .tabs{
+        height: 80vh;
+    }
+</style>

@@ -41,9 +41,6 @@ export default {
     connect(){
       // 调用websocketutil的wsclients,创建连接并管理
       this.wsclient = wsclients.create("/wsapi")
-      this.wsclient.onopen = ()=>{
-        console.log("user:",this.user.userName,"connect to server")
-        }
       addEventListener('wsmessage',(data)=>{
         // console.log(data.detail)
       })
@@ -59,12 +56,10 @@ export default {
   mounted(){
     // 刷新重连
     if (cookie.get("Logined")){
-      this.login= true
       this.user = JSON.parse(cookie.get("User"))
       console.log(cookie.get("User"),(this.user))
       this.connect()
     }
-    window.vue = toRaw(this)
     addEventListener('logout',()=>{
       console.log("logout Event ::")
       this.user=null
@@ -95,6 +90,11 @@ export default {
         this.user=null
         this.login=null
       }
+    })
+    addEventListener('wsonline',()=>{
+      this.login=true
+      console.log("user:",this.user.userName,"connect to server")
+
     })
     // 调试
   },

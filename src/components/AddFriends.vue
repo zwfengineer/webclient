@@ -61,6 +61,7 @@ import { toRaw, watch} from '@vue/runtime-core';
 import {searchFriends} from '@/lib/axiosutil';
 import { getuser } from '@/lib/util';
 import { postaddfriendrequest } from '@/lib/websocketutil';
+import { ElMessage } from 'element-plus';
 export default {
     name:'AddFriends',
     components:{
@@ -118,6 +119,11 @@ export default {
       },
       postinfo(){
         postaddfriendrequest(this.requestmessage,this.selectuser.uid)
+        ElMessage.success({
+          message:"发送成功",
+          type: "success"
+        })
+        this.infovisable = false
       }
     },
     mounted(){
