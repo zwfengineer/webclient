@@ -1,4 +1,5 @@
-import { Message } from "./sessionmanager";
+import { Message } from "./Message";
+import { repeat } from "./sessionmanager";
 import { host,protol,wsoffline,wslinkerror,wsmessage, getuser,messageType, dataType, wsonline,addfriendevent,repeataddfriendrequestevent} from "./util"; 
 const wsclients = {
     wsc:WebSocket,
@@ -25,10 +26,10 @@ const wsclients = {
             this.wsc.onmessage=(msg)=>{ 
                 dispatchEvent(wsmessage(JSON.parse(msg.data)))
                 let data = JSON.parse(msg.data)
-                if (data.messageType != 'Heart'){
+                if (data.messageType != messageType.Heart){
                     console.log(data)
                 }
-                if(data.messageType == 'ServerPush' && data.dataType == 'Directive'){
+                if(data.messageType == messageType.ServerPush && data.dataType == dataType.Directive){
                     switch (data.data) {
                         case "addfriendevent":
                             dispatchEvent(addfriendevent())
@@ -40,6 +41,9 @@ const wsclients = {
                         default:
                             break;
                     }
+                }
+                if(data.messageType == messageType.UserMessage){
+                    repeat(data)
                 }
             } 
             this.openlink.set(path,this) 

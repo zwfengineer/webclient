@@ -5,6 +5,8 @@
     "baseUrl": "./",
     "moduleResolution": "node",
     "jsx": "preserve",
+    "allowJs": true,
+    "strict": true,
     "paths": {
       "@/*": [
         "src/*"
@@ -15,6 +17,9 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
+  },
+  "vueCompilerOptions": {
+    "experimentalShamefullySupportOptionsApi":true
   }
 }

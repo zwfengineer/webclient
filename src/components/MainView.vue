@@ -22,7 +22,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import Topbar from './Topbar.vue'
 import { toRaw } from '@vue/reactivity'
@@ -72,13 +71,13 @@ export default {
     height: 100vh;
 }
 .header{
-    min-height: 10%;
+    min-height: 9%;
     opacity:initial ;
     background-color: rgb(7, 231, 231);
 }
 .main{
     background:rgba($color: blue, $alpha: 0.5);
-    height: 80vh;
+    height: 90%;
     width: 100%;
     display: block;
 }
@@ -108,11 +107,6 @@ export default {
 .bottom{
     background-color: rgba($color: #24ff07, $alpha: 0.7);
     width: 100%;
-    height: 10%;
-}
-.header div{
-    padding-left: 30px;
-    padding-top: 10px;
-    width: 20%;
+    height: 1%;
 }
 </style>

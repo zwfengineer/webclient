@@ -15,6 +15,7 @@
 
 <script>
 import SpeakBubbles from '@/components/SpeakBubbles.vue';
+import { ElMessage } from 'element-plus';
 import FullTextEditor from './FullTextEditor.vue';
 export default {
     name:"Chat",
@@ -29,16 +30,20 @@ export default {
     components:{
     SpeakBubbles,
     FullTextEditor
-},
+    },
     props:{
         friend:null
     },
     mounted() {
-        
+        this.messages = this.friend.messages
+        addEventListener('updatemessages',()=>{
+            console.log("new info repeat");
+            this.$forceUpdate()
+        })
     },
     methods: {
         send(data){
-            console.log(data);
+            this.friend.send(data)
         }
     },
 }
@@ -46,6 +51,8 @@ export default {
 <style scoped> 
 .message{
     height: 50%;
+    overflow-y: scroll;
+    overflow-x: hidden;
     /* background-color: green; */
 
 }

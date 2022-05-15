@@ -1,14 +1,20 @@
 <template>
     <div class="topbar">
         <div class="info">        
-            <span>userName:{{userName}}</span>
+            <span>{{userName}}</span>
             <br>
-            <span>uid:{{uid}}</span>
+            <span>{{uid}}</span>
         </div>
-        <el-avatar :src="avatarsrc"></el-avatar>
-        <el-button @click="topbarlogout">Logout</el-button>
+        <span>
+            <el-avatar :src="avatarsrc"></el-avatar>
+        </span>
     </div>
-    
+    <div class="Exit">
+        <el-button type="primary" size="default" @click="topbarlogout">
+        离开
+        </el-button>
+        
+    </div>
 </template>
 <script>
 import {getavatarsrc,logout} from '@/lib/util'
@@ -35,5 +41,15 @@ export default {
 <style lang="scss" scoped>
 .topbar .info{
     display: inline-block;
+    max-width: 400px;
+}
+.topbar{
+    padding-left: 30px;
+    padding-top: 10px;
+    width: 20%;
+}
+.Exit{
+    margin-left: 90%;
+    margin-top: -25px;
 }
 </style>

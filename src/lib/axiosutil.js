@@ -32,13 +32,17 @@ function agreeAddFriendRequest(data,callback){
         }
     })
 }
-function getHistoryMessage() {
-    
+function getHistoryMessages(callback) {
+    baseAxios.get("/pullHistoryMessage")
+    .then((response)=>{
+        callback(response.data)
+    })
 }
 
 export{
     getfriendlist,
     searchFriends,
     getAddFriendList,
-    agreeAddFriendRequest
+    agreeAddFriendRequest,
+    getHistoryMessages
 }

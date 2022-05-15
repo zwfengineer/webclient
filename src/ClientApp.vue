@@ -9,6 +9,7 @@ import MainView from './components/MainView'
 import {toRaw} from '@vue/reactivity'
 import {wsclients} from './lib/websocketutil'
 import { cookie } from './lib/util'
+import {initialize} from "./lib/messagedatabase.ts"
 export default {
   name:'ClientApp',
   components:{
@@ -94,7 +95,7 @@ export default {
     addEventListener('wsonline',()=>{
       this.login=true
       console.log("user:",this.user.userName,"connect to server")
-
+      initialize()
     })
     // 调试
   },

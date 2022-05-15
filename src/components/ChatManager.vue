@@ -1,10 +1,9 @@
 <template>
-<div :style="showsession">
+<div :style="showsession" class="chatmanager">
     <el-tabs 
     v-model="activename"
     @tab-click="handleClick"
     @tab-remove="closesession"
-    type="border-card"
     class="tabs"
     >
         <el-tab-pane 
@@ -15,7 +14,7 @@
         
         >
         <template  #label>
-                {{value[1].name}}
+            <span>{{value[1].name}}</span>
         </template>
                 <Chat
                 :friend="value[1]"
@@ -71,7 +70,6 @@ export default {
         addEventListener("logout",()=>{
             activeSessions.clear()
         })
-        
     },
     methods:{
         closesession(data){
@@ -122,10 +120,21 @@ export default {
 }
 </script>
 <style scoped>
-    .tabs > .el-tabs__content > .el-tab-pane{
-        height: 70vh;
-    }
     .tabs{
-        height: 80vh;
+        height: 100vh;
+        padding:4px;
+    }
+    .tabs > .el-tabs__content > .el-tab-pane{
+        height: 90vh;
+    }
+    .tabs::v-deep .el-tabs__header{
+        margin-bottom: 0;
+    }
+    .tabs::v-deep .el-tabs__item{
+        height: 20px;
+        bottom: 10px;
+    }
+    .chatmanager{
+        height: 100vh;
     }
 </style>

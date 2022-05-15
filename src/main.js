@@ -5,6 +5,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Unicon from 'vue-unicons'
 import * as unicons from 'vue-unicons/dist/icons'
+import { Boot } from '@wangeditor/editor'
+import {PostButtonMenu} from "@/lib/postbutton"
+// 注册到 wangEditor
+
+Boot.registerMenu(PostButtonMenu)
+
+
 const clientapp = createApp(ClientApp)
 installElementPlus(clientapp)
 const objArray = [];

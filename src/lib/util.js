@@ -8,6 +8,7 @@ const protol ={
     wss:"wss://",
     https:"https://",
 }
+
 const logoutevent = new Event('logout')
 const baseAxios = axios.create({
     baseURL:"https://"+host,
@@ -25,7 +26,8 @@ const messageType={
     UserMessage:"UserMessage",
     SystemMessage:"SystemMessage",
     AddFriendRequest:"AddFriendRequest",
-    DeliverFeedback:"DeliverFeedback"
+    DeliverFeedback:"DeliverFeedback",
+    ServerPush:"ServerPush"
 }
 const dataType={
     Text:"Text",
@@ -33,7 +35,9 @@ const dataType={
     Video:"Video",
     OnlineVideo:"OnlineVideo",
     Voice:"Voice",
-    OnlineVioce:"OnlineVoice"
+    OnlineVioce:"OnlineVoice",
+    Directive:"Directive"
+
 }
 
 

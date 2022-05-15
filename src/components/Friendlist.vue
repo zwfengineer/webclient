@@ -11,7 +11,7 @@
 </template>
 <script>
 import {getfriendlist} from '@/lib/axiosutil'
-import { Session } from '@/lib/sessionmanager'
+import { Session,activeSessions } from '@/lib/sessionmanager'
 import { ElMessage } from 'element-plus'
 import NoticeList from './NoticeList.vue'
 export default {
@@ -49,8 +49,12 @@ export default {
         },
         opensession(data){
             console.log(data)
-            let session = new Session(data.username,data.fid)
-            session.active()
+            if (activeSessions.has(data.fid)){
+                activeSessions.get(data.fid).active()
+            }else{
+                let session = new Session(data.username,data.fid)
+                session.active()
+            }
         }
     }
 }

@@ -12,8 +12,18 @@ module.exports = {
   },
   configureWebpack: {
     devtool: 'source-map',
+    resolve: {extensions:[".ts",".tsx",".js",".json"]},
+    module:{
+      rules:[
+        {
+          test:/\.tsx?%/,
+          loader:'ts-loader',
+          exclude: /node_modules/,
+          options:{
+            appendTsSuffixTo:[/\.vue$/],
+          }
+        }
+      ]
+    }
   },
-  devServer:{
-    port: 1938
-  }
 }
