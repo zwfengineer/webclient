@@ -8,8 +8,9 @@ import LoginView from './components/LoginView'
 import MainView from './components/MainView'
 import {toRaw} from '@vue/reactivity'
 import {wsclients} from './lib/websocketutil'
-import { cookie } from './lib/util'
-import {initialize} from "./lib/messagedatabase.ts"
+import { cookie, getuser } from './lib/util'
+import {initialize} from "./lib/messagedatabase"
+import { loadofflinehistorymessage } from './lib/messagemanager'
 export default {
   name:'ClientApp',
   components:{
@@ -94,8 +95,9 @@ export default {
     })
     addEventListener('wsonline',()=>{
       this.login=true
-      console.log("user:",this.user.userName,"connect to server")
-      initialize()
+      console.log("user:",getuser().userName,"connect to server")
+      initialize(getuser().uid)
+      loadofflinehistorymessage()
     })
     // 调试
   },

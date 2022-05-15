@@ -27,7 +27,6 @@
 import '@wangeditor/editor/dist/css/style.css';
 import { onBeforeUnmount, ref, shallowRef } from 'vue';
 import { Editor, Toolbar} from '@wangeditor/editor-for-vue';
-import {DomEditor} from '@wangeditor/editor'
 import{ElMessage} from 'element-plus'
 export default {
   components: { Editor, Toolbar },
@@ -82,8 +81,6 @@ export default {
     onBeforeUnmount(() => {
       const editor = editorRef.value;
       if (editor == null) return;
-      const toolbar = DomEditor.getToolbar(editor)
-      console.log(editor.getAllMenuKeys())
       editor.destroy();
     });
 
@@ -95,7 +92,6 @@ export default {
       })
     };
     const handleFocus = (editor) => {
-      console.log(editor.getAllMenuKeys())
     };
     const customPaste = (editor, event, callback) => {
       // 自定义插入内容

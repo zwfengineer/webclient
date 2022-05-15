@@ -15,7 +15,6 @@
 
 <script>
 import SpeakBubbles from '@/components/SpeakBubbles.vue';
-import { ElMessage } from 'element-plus';
 import FullTextEditor from './FullTextEditor.vue';
 export default {
     name:"Chat",
@@ -36,7 +35,7 @@ export default {
     },
     mounted() {
         this.messages = this.friend.messages
-        addEventListener('updatemessages',()=>{
+        addEventListener('updatechat',()=>{
             console.log("new info repeat");
             this.$forceUpdate()
         })

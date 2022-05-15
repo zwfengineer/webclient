@@ -1,4 +1,4 @@
-import { Message } from "./Message";
+import { Message } from "./messagedatabase";
 import { repeat } from "./sessionmanager";
 import { host,protol,wsoffline,wslinkerror,wsmessage, getuser,messageType, dataType, wsonline,addfriendevent,repeataddfriendrequestevent} from "./util"; 
 const wsclients = {
@@ -8,7 +8,6 @@ const wsclients = {
     create: function(path) {
         console.log("open:",this.openlink,this.checkrepat(path))
         if (this.checkrepat(path)){
-            console.log(protol.ws+host+path)
             this.path = path
             this.wsc =new WebSocket(protol.wss + host + path)
             this.wsc.addEventListener('close',(error)=>{

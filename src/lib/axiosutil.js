@@ -33,9 +33,16 @@ function agreeAddFriendRequest(data,callback){
     })
 }
 function getHistoryMessages(callback) {
-    baseAxios.get("/pullHistoryMessage")
+    baseAxios.post("/pullHistoryMessage")
     .then((response)=>{
-        callback(response.data)
+        console.log(response.data)
+        let data = new Map();
+        for(let key of Object.keys(response.data)){
+            console.log(key)
+            data.set(key,response.data[key])
+        }
+        console.log(data)
+        callback(data)
     })
 }
 
