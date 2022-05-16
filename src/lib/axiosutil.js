@@ -1,8 +1,14 @@
 import { baseAxios,flushfriendlist,friendlistevent} from "./util";
+import {Friend} from "./Friend"
 function getfriendlist(callback) {
     baseAxios.post('/getfriendlist').then((response) => {
         if(response.status == 200){
-            callback(response.data)
+            let friendlist = new Array();
+            for(let item of response.data){
+                console.log(item)
+                friendlist.push(new Friend(item))
+            }
+            callback(friendlist)
             dispatchEvent(friendlistevent(response.data))
         }
     })

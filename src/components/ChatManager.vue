@@ -24,9 +24,8 @@
 </div>
 </template>
 <script>
-import {activeSessions, clearall, Session, sessionDestory} from '@/lib/sessionmanager'
+import {activeSessions, sessionDestory} from '@/lib/sessionmanager'
 import Chat from '@/components/Chat.vue';
-import { toRaw } from '@vue/reactivity'
 export default {
     name:"ChatManager",
     data(){

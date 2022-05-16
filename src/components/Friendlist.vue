@@ -52,11 +52,11 @@ export default {
                 }
             })
         },
-        opensession(data){
-            if (activeSessions.has(data.fid)){
-                activeSessions.get(data.fid).active()
+        opensession(friend){
+            if (activeSessions.has(friend.id)){
+                activeSessions.get(friend.id).active()
             }else{
-                let session = new Session(data.username,data.fid)
+                let session = new Session(friend.username,friend.id)
                 session.active()
             }
         }

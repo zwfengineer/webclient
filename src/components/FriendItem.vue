@@ -10,39 +10,41 @@
         </div>
     </div>
 </template>
-<script lang="ts">
+<script>
 import { Friend } from "@/lib/Friend";
-import { defineComponent, ref } from "vue";
-export default defineComponent({
+import { ref } from "vue";
+export default {
     name:"Friend",
     props:{
         friend:Friend
     },
-    setup(props){
+    setup(){
         let unreadnum=ref(10);
-        const addunreadnum=function (data:number){
+        const addunreadnum=function (data){
             unreadnum.value = unreadnum.value+data;
         }
-        const cleanunreadnum= function (data:number){
+        const cleanunreadnum= function (){
             unreadnum.value = 0;
         }
         const read=function(){
             unreadnum.value=0;
         }
-        addEventListener("newmessageevent",(data:CustomEventInit)=>{
-            if (data.detail.id == props.friend?.id){
-                addunreadnum(data.detail.unreadnum)
-            }
-        })
-
         return{
             read,
             unreadnum,
             cleanunreadnum,
             addunreadnum,
         }
+    },
+    mounted(){
+        addEventListener("newmessageevent",(data)=>{
+            if(data.detail.id == this.friend?.id){
+                this.addunreadnum(data.detail.unreadnum)
+            }
+        })
     }
-})
+}
+
 </script>
 <style lang="scss" scoped>
     .pops{

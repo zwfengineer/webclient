@@ -20,13 +20,13 @@ export class Message {
     dataType!: String;
 }
 export class Messages{
-    constructor(id:string,Messagelist:Message[]){
+    constructor(id:string,messagelist?:Message[]){
         this.id=id;
-        this.Messagelist=Messagelist;
+        this.Messagelist=messagelist;
     }
 
-    id?: string | undefined;
-    Messagelist?: Array<Message>|undefined;
+    id?: string;
+    Messagelist?: Array<Message>;
     
 }
 

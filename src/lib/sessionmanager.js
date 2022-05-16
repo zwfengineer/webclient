@@ -1,5 +1,6 @@
 import { dataType, getuser, messageType } from "./util"
 import {sessionloadhistory,savemessage} from "./messagemanager"
+import {NewMessageEvent} from "./NewMessageEvent"
 import { wsclients } from "./websocketutil"
 import {Base64} from 'js-base64'
 import { Message } from "./messagedatabase"
@@ -18,7 +19,11 @@ function sessionactive(data){
     })
 }
 function repeat(message){
-    savemessage(message)
+    savemessage(message.from,message)
+    dispatchEvent(NewMessageEvent({
+        id:message.from,
+        unreadnum:1,
+    }))
     for(let fid of activeSessions.keys()){
         if (fid == message.from){
             let session = activeSessions.get(fid)
@@ -65,7 +70,7 @@ class Session{
         let connnect = wsclients.create("/wsapi")
         connnect.send(message.tojson())
         this.messages.push(message)
-        savemessage(message)
+        savemessage(this.id,message)
     }
 }
 export {
