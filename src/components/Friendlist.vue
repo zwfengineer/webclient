@@ -1,8 +1,13 @@
 <template>
     <div class="friendlistbox">    
-        <li v-for = "friend in friendlist" :key="friend" @click="opensession(friend)">
+        <!-- <li v-for = "friend in friendlist" :key="friend" @click="opensession(friend)">
             {{friend.username}}
-        </li>  
+        </li>  -->
+        <FriendItem
+        v-for="friend in friendlist"
+        :friend="friend"
+        @click="opensession(friend)"
+        ></FriendItem>
         <div v-if="nofriends">
             <span>没得好友！</span>
         </div>
@@ -14,8 +19,9 @@ import {getfriendlist} from '@/lib/axiosutil'
 import { Session,activeSessions } from '@/lib/sessionmanager'
 import { ElMessage } from 'element-plus'
 import NoticeList from './NoticeList.vue'
+import FriendItem from './FriendItem.vue'
 export default {
-  components: { NoticeList },
+  components: { NoticeList, FriendItem },
     name:"Friendlist",
     data(){
         return{
@@ -38,7 +44,6 @@ export default {
     methods:{
         getdata(){
             getfriendlist((data)=>{
-                console.log("Friendlist:23:",data)
                 if(data!=null){
                     this.friendlist = data 
                     this.nofriends=false
@@ -48,7 +53,6 @@ export default {
             })
         },
         opensession(data){
-            console.log(data)
             if (activeSessions.has(data.fid)){
                 activeSessions.get(data.fid).active()
             }else{

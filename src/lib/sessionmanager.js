@@ -51,7 +51,7 @@ class Session{
         dispatchEvent(sessionactive(this.id))
     }
     close(){
-        dispatchEvent(sessionDestory)
+        dispatchEvent(sessionDestory())
     }
     send(data){
         let message = new Message({

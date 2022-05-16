@@ -59,7 +59,6 @@ export default {
     // 刷新重连
     if (cookie.get("Logined")){
       this.user = JSON.parse(cookie.get("User"))
-      console.log(cookie.get("User"),(this.user))
       this.connect()
     }
     addEventListener('logout',()=>{
@@ -82,7 +81,6 @@ export default {
         cookie.remove("User")
         this.user=null
         this.login=null
-        alert(data.detail)
       }
       if(data.detail == '1001'){
         this.user=null

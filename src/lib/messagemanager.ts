@@ -25,7 +25,9 @@ const sessionloadhistory=async (id:string,callback?:any)=>{
 }
 const savemessage = async function(id:string,message:Message):Promise<void>{
     let messages:Messages=new Messages(id,[message]);
-    messagedatabasemanager.messages.put(messages)    
+    messagedatabasemanager.messages.put(messages).catch((error:Error)=>{
+        console.log(error.message)
+    });
 }
 
 export{

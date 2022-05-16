@@ -58,7 +58,6 @@ export default {
     setup(props){
         addEventListener('friendlistevent',data=>{
             props.friendlist = data.detail
-            console.log(data.detail)
         })
     },
     methods:{

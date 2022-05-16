@@ -1,0 +1,62 @@
+Date : 2022-05-16 09:13:32
+Directory : g:\scoi\webclient\src\
+Total : 32 files,  2036 codes, 17 comments, 88 blanks, all 2141 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| Vue        |         16 |      1,501 |          4 |         43 |      1,548 |
+| JavaScript |          6 |        405 |          5 |         32 |        442 |
+| TypeScript |          9 |        127 |          2 |         11 |        140 |
+| SCSS       |          1 |          3 |          6 |          2 |         11 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                   |         32 |      2,036 |         17 |         88 |      2,141 |
+| components                                          |         15 |      1,380 |          4 |         42 |      1,426 |
+| lib                                                 |         11 |        499 |          5 |         41 |        545 |
+| plugins                                             |          2 |         13 |          0 |          1 |         14 |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                            | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------+------------+------------+------------+------------+------------+
+| g:\scoi\webclient\src\ClientApp.vue                 | Vue        |        121 |          0 |          1 |        122 |
+| g:\scoi\webclient\src\components\AddFriends.vue     | Vue        |        137 |          0 |          3 |        140 |
+| g:\scoi\webclient\src\components\Chat.vue           | Vue        |         61 |          0 |          3 |         64 |
+| g:\scoi\webclient\src\components\ChatManager.vue    | Vue        |        135 |          0 |          3 |        138 |
+| g:\scoi\webclient\src\components\FriendItem.vue     | Vue        |         66 |          0 |          1 |         67 |
+| g:\scoi\webclient\src\components\Friendlist.vue     | Vue        |         74 |          3 |          2 |         79 |
+| g:\scoi\webclient\src\components\FullTextEditor.vue | Vue        |        143 |          0 |         12 |        155 |
+| g:\scoi\webclient\src\components\GroupList.vue      | Vue        |         18 |          0 |          1 |         19 |
+| g:\scoi\webclient\src\components\HelloWorld.vue     | Vue        |         55 |          1 |          4 |         60 |
+| g:\scoi\webclient\src\components\LoginView.vue      | Vue        |        221 |          0 |          3 |        224 |
+| g:\scoi\webclient\src\components\MainView.vue       | Vue        |        110 |          0 |          1 |        111 |
+| g:\scoi\webclient\src\components\Menu.vue           | Vue        |         71 |          0 |          2 |         73 |
+| g:\scoi\webclient\src\components\Notice.vue         | Vue        |         61 |          0 |          3 |         64 |
+| g:\scoi\webclient\src\components\NoticeList.vue     | Vue        |         54 |          0 |          1 |         55 |
+| g:\scoi\webclient\src\components\SpeakBubbles.vue   | Vue        |        120 |          0 |          2 |        122 |
+| g:\scoi\webclient\src\components\Topbar.vue         | Vue        |         54 |          0 |          1 |         55 |
+| g:\scoi\webclient\src\element-variables.scss        | SCSS       |          3 |          6 |          2 |         11 |
+| g:\scoi\webclient\src\lib\Friend.ts                 | TypeScript |         14 |          0 |          0 |         14 |
+| g:\scoi\webclient\src\lib\NewMessageEvent.ts        | TypeScript |          5 |          0 |          0 |          5 |
+| g:\scoi\webclient\src\lib\axiosutil.d.ts            | TypeScript |          5 |          0 |          0 |          5 |
+| g:\scoi\webclient\src\lib\axiosutil.js              | JavaScript |         47 |          0 |          3 |         50 |
+| g:\scoi\webclient\src\lib\messagedatabase.ts        | TypeScript |         46 |          0 |          4 |         50 |
+| g:\scoi\webclient\src\lib\messagemanager.ts         | TypeScript |         33 |          0 |          5 |         38 |
+| g:\scoi\webclient\src\lib\postbutton.d.ts           | TypeScript |          2 |          0 |          0 |          2 |
+| g:\scoi\webclient\src\lib\postbutton.js             | JavaScript |         33 |          4 |          6 |         43 |
+| g:\scoi\webclient\src\lib\sessionmanager.js         | JavaScript |         75 |          0 |          3 |         78 |
+| g:\scoi\webclient\src\lib\util.js                   | JavaScript |        151 |          0 |         18 |        169 |
+| g:\scoi\webclient\src\lib\websocketutil.js          | JavaScript |         88 |          1 |          2 |         91 |
+| g:\scoi\webclient\src\main.ts                       | TypeScript |         15 |          1 |          0 |         16 |
+| g:\scoi\webclient\src\plugins\unicon.d.ts           | TypeScript |          2 |          0 |          1 |          3 |
+| g:\scoi\webclient\src\plugins\unicon.js             | JavaScript |         11 |          0 |          0 |         11 |
+| g:\scoi\webclient\src\shims-vue.d.ts                | TypeScript |          5 |          1 |          1 |          7 |
+| Total                                               |            |      2,036 |         17 |         88 |      2,141 |
++-----------------------------------------------------+------------+------------+------------+------------+------------+

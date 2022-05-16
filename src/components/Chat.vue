@@ -36,7 +36,6 @@ export default {
     mounted() {
         this.messages = this.friend.messages
         addEventListener('updatechat',()=>{
-            console.log("new info repeat");
             this.$forceUpdate()
         })
     },

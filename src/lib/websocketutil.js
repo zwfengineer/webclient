@@ -66,7 +66,14 @@ function post(data,fid){
 }
 function postaddfriendrequest(data,fid){
     let server = wsclients.create("/wsapi")
-    let message = new Message()
+    let message = new Message({
+        from:getuser().uid,
+        to:fid,
+        data:data,
+        messageType:messageType.AddFriendRequest,
+        unixTime: new Date(),
+        dataType:dataType.Text,
+    })
     message.data = data
     message.from = getuser().uid
     message.messageType = messageType.AddFriendRequest

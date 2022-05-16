@@ -104,7 +104,6 @@ function checkPhoneNumber(Number,country) {
     return true
 }
 function checkUser(data){
-    console.log(data)
     var alertlist = new Array()
     for(var k in data){
         if (data[k].length == 0){

@@ -42,7 +42,6 @@ export default {
         Chat
     },
     setup() { 
-        console.log("setup")
         activeSessions.clear()
     },
     mounted(){           
@@ -66,7 +65,6 @@ export default {
                 }
             }
         })
-        console.log(activeSessions) 
         addEventListener("logout",()=>{
             activeSessions.clear()
         })

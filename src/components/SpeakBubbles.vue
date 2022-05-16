@@ -107,9 +107,16 @@ export default {
     border-radius:20px;   
 } 
 .bubbles::v-deep p:nth-child(1){ 
-    margin-top:0;
+    margin-top:2px;
+    margin-bottom: 0;
 }
 .bubbles::v-deep p:nth-last-child(1){ 
     margin-bottom:0;
+    margin-top: 2px;
+}
+.bubbles::v-deep p{
+    margin:0;
+    white-space:pre-wrap;
+    word-break: break-all;
 }
 </style>

@@ -5,13 +5,13 @@
             :editor="editorRef"
             :defaultConfig="toolbarConfig"
             :mode="mode"
-            style="border-bottom: 1px solid #ccc;max-height:10%;width: 500px;"
+            style="border-bottom: 1px solid #ccc;min-width: 350px;height: 40px;"
           />
           <Editor
             :defaultConfig="editorConfig"
             :mode="mode"
             v-model="valueHtml"
-            style="height: 90%; overflow-y: hidden;"
+            style="height: 240px; overflow-y: clip;"
             @onCreated="handleCreated"
             @onChange="handleChange"
             @onFocus="handleFocus"
@@ -138,6 +138,18 @@ export default {
 <style scoped>
 .menu{
   height: 90%;
-  overflow-y:scroll;
+  overflow-x:scroll;
+  overflow-y: hidden;
+}
+.menu::v-deep .w-e-bar-item button{
+  padding:0 4px
+}
+.menu::v-deep .w-e-bar-item-group .w-e-bar-item-menus-container{
+  margin-top: 30px;
+}
+.menu::v-deep .w-e-drop-panel{
+    margin-left: -90px;
+    height: 30vh;
+    overflow-y: scroll;
 }
 </style>

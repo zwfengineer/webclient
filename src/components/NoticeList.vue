@@ -38,7 +38,6 @@ export default {
     methods: {
         getdata(){
             getAddFriendList((data) => {
-                console.log(data);
                 this.noticelist = data;
             });
         }
