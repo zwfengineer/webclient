@@ -114,7 +114,8 @@ export default {
 }
 .bubbles::v-deep p{
     margin:0;
-    white-space:pre-wrap;
-    word-break: break-all;
+}
+.bubbles::v-deep .w-e-text-container{
+    word-break: keep-all;
 }
 </style>

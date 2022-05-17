@@ -153,4 +153,7 @@ export default {
     height: 30vh;
     overflow-y: scroll;
 }
+.menu::v-deep .w-e-text-container{
+  word-break:keep-all;
+}
 </style>
