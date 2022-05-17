@@ -8,7 +8,7 @@ import LoginView from './components/LoginView'
 import MainView from './components/MainView'
 import {toRaw} from '@vue/reactivity'
 import {wsclients} from './lib/websocketutil'
-import { cookie, getuser } from './lib/util'
+import { cookie, flushfriendlist, getuser } from './lib/util'
 import {initialize} from "./lib/messagedatabase"
 import { loadofflinehistorymessage } from './lib/messagemanager'
 export default {

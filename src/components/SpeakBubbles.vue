@@ -1,9 +1,7 @@
 <template>
 <div :style="SpeakBubblesStyle">
     <div class="avatar" >
-        <el-avatar
-        size="small">
-        </el-avatar>
+        <slot name="avatar" :message="message" :getavatarsrc="getavatarsrc"></slot>
     </div>
     <div class="idbox" >
     <span>

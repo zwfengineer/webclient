@@ -1,9 +1,9 @@
 <template>
-    <div @click="read" class="friend">
+    <div @click="cleanunreadnum" class="friend">
         <div class="item">
             <span>{{friend?.username}}</span>
         </div>
-        <div class="pops" v-if="unreadnum!=0">
+        <div class="pops" v-if="unreadnum!=0 && (!active)">
             <span>
                 {{unreadnum}}
             </span>
@@ -14,32 +14,47 @@
 import { Friend } from "@/lib/Friend";
 import { ref } from "vue";
 export default {
-    name:"Friend",
+    name:"Frienditem",
     props:{
-        friend:Friend
+        friend:Friend,
     },
-    setup(){
-        let unreadnum=ref(10);
+    setup(props){
+        let unreadnum=ref(0);
+        let active = ref(false);
         const addunreadnum=function (data){
-            unreadnum.value = unreadnum.value+data;
+            if(! active.value){
+                unreadnum.value = unreadnum.value+data;
+            }
         }
         const cleanunreadnum= function (){
             unreadnum.value = 0;
         }
-        const read=function(){
-            unreadnum.value=0;
-        }
         return{
-            read,
             unreadnum,
             cleanunreadnum,
             addunreadnum,
+            active
         }
     },
     mounted(){
         addEventListener("newmessageevent",(data)=>{
-            if(data.detail.id == this.friend?.id){
+            if(data.detail.id == this.friend.id){
                 this.addunreadnum(data.detail.unreadnum)
+            }
+        })
+        addEventListener("changefriend",(data)=>{
+            if(data.detail.id != this.friend.id){
+                this.active = false;
+            }else {
+                if(data.detail.id == this.friend.id){
+                    this.active=true;
+                    this.cleanunreadnum();
+                }
+            }
+        })
+        addEventListener("sessionDestory",(data)=>{
+            if(data.detail.data == this.friend.id){
+                this.active=false
             }
         })
     }

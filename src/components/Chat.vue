@@ -1,9 +1,17 @@
 <template>
-<div class ="message">
+<div style="height: 100%;width: 100%;">
+<div class ="message" v-show="messagevisible">
     <div v-for="message in messages">
     <SpeakBubbles
     :message="message"
-    ></SpeakBubbles>
+    >
+    <template #avatar  v-if="message.from == this.session.friend.id">        
+        <el-avatar :src="getavatarsrc(this.session.friend.avatar)"></el-avatar>
+    </template>
+    <template #avatar v-if="message.from != this.session.friend.id">        
+        <el-avatar :src="getavatarsrc(this.session.user.avatar)"></el-avatar>
+    </template>
+    </SpeakBubbles>
     </div>
 </div>
 <div class="inputbox">
@@ -11,11 +19,14 @@
     :send="send"
     ></FullTextEditor>
 </div>
+</div>
+
 </template>
 
 <script>
 import SpeakBubbles from '@/components/SpeakBubbles.vue';
 import FullTextEditor from './FullTextEditor.vue';
+import {getavatarsrc} from "@/lib/util"
 export default {
     name:"Chat",
     data() {
@@ -24,6 +35,8 @@ export default {
             friendname:null,
             messages:null,
             inputmessage:null,
+            hasunread:false,
+            messagevisible:true,
         }
     },
     components:{
@@ -31,17 +44,35 @@ export default {
     FullTextEditor
     },
     props:{
-        friend:null
+        session:null
     },
     mounted() {
-        this.messages = this.friend.messages
+        this.messages = this.session.messages
         addEventListener('updatechat',()=>{
             this.$forceUpdate()
+        })
+        addEventListener("newmessageevent",(data)=>{
+            if(data.detail.id == this.session.id){
+                this.hasunread = true
+            }
+        })
+        addEventListener("changefriend",(data)=>{
+            if((data.detail.id == this.session.id )&&( this.hasunread)){
+                this.hasunread = false;
+                setTimeout(()=>{
+                    // 等一秒在飞滚动条，messsage实际上不在可视区域，scrollHeight为零
+                    let message = this.$parent.$el.getElementsByClassName('message')[0];
+                    message.scrollTo(0,message.scrollHeight)
+                },1)
+            }
         })
     },
     methods: {
         send(data){
-            this.friend.send(data)
+            this.session.send(data)
+        },
+        getavatarsrc(data){
+            return getavatarsrc(data)
         }
     },
 }

@@ -1,6 +1,6 @@
 import { dataType, getuser, messageType } from "./util"
 import {sessionloadhistory,savemessage} from "./messagemanager"
-import {NewMessageEvent} from "./NewMessageEvent"
+import {NewMessageEvent} from "./CustomEvent"
 import { wsclients } from "./websocketutil"
 import {Base64} from 'js-base64'
 import { Message } from "./messagedatabase"
@@ -34,13 +34,15 @@ function repeat(message){
 }
 
 class Session{
-    constructor(name,id){
-        this.name=name
-        this.id=id
+    constructor(friend){
+        this.name=friend.username
+        this.id=friend.id
+        this.friend = friend
         this.dormancy = true
         this.messages=new Array();
         this.user = getuser()
-        this.loadhistory(id)
+        
+        this.loadhistory(friend.id)
         activeSessions.set(this.id,this)
         dispatchEvent(updatechat)
     }
@@ -54,9 +56,6 @@ class Session{
     }
     active(){
         dispatchEvent(sessionactive(this.id))
-    }
-    close(){
-        dispatchEvent(sessionDestory())
     }
     send(data){
         let message = new Message({

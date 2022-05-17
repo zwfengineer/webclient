@@ -16,7 +16,7 @@ const wsclients = {
                 //匿名函数才能访问上级的对象
             })
             this.wsc.addEventListener('open',()=>{
-                dispatchEvent(wsonline())
+                
             })
             this.wsc.addEventListener("error",(error)=>{
                 console.log(error)
@@ -36,7 +36,9 @@ const wsclients = {
                         case "addfriendrequestevent":
                             dispatchEvent(repeataddfriendrequestevent())
                             break;
-
+                        case "useronline":
+                            dispatchEvent(wsonline())
+                            break;
                         default:
                             break;
                     }
@@ -45,7 +47,8 @@ const wsclients = {
                     repeat(data)
                 }
             } 
-            this.openlink.set(path,this) 
+            this.openlink.set(path,this)
+
             return this.wsc 
         }else{
             return  this.openlink.get(path).wsc

@@ -3,3 +3,8 @@ export function NewMessageEvent(data:any):CustomEvent{
         detail:data
     })
 }
+export function changefriend(data:any):CustomEvent{
+    return new CustomEvent("changefriend",{
+        detail:data
+    })
+}

@@ -4,6 +4,7 @@
     v-model="activename"
     @tab-click="handleClick"
     @tab-remove="closesession"
+    @tab-change="sessionchange"
     class="tabs"
     >
         <el-tab-pane 
@@ -17,7 +18,7 @@
             <span>{{value[1].name}}</span>
         </template>
                 <Chat
-                :friend="value[1]"
+                :session="value[1]"
                 ></Chat>
         </el-tab-pane>
     </el-tabs>
@@ -26,6 +27,7 @@
 <script>
 import {activeSessions, sessionDestory} from '@/lib/sessionmanager'
 import Chat from '@/components/Chat.vue';
+import { changefriend } from '@/lib/CustomEvent';
 export default {
     name:"ChatManager",
     data(){
@@ -107,6 +109,11 @@ export default {
                 }
             }
             
+        },
+        sessionchange(data){
+            dispatchEvent(
+                changefriend({id:data})
+            )
         }
     },
     computed:{

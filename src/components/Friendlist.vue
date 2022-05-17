@@ -56,7 +56,7 @@ export default {
             if (activeSessions.has(friend.id)){
                 activeSessions.get(friend.id).active()
             }else{
-                let session = new Session(friend.username,friend.id)
+                let session = new Session(friend)
                 session.active()
             }
         }

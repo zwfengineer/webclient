@@ -5,7 +5,6 @@ function getfriendlist(callback) {
         if(response.status == 200){
             let friendlist = new Array();
             for(let item of response.data){
-                console.log(item)
                 friendlist.push(new Friend(item))
             }
             callback(friendlist)
@@ -47,10 +46,19 @@ function getHistoryMessages(callback) {
     })
 }
 
+function getFriendAvatr(data,callback){
+    baseAxios.post("/getfriendavatar",data).then(
+        (response)=>{   
+            callback(response.data)
+        }
+    )
+}
+
 export{
     getfriendlist,
     searchFriends,
     getAddFriendList,
     agreeAddFriendRequest,
-    getHistoryMessages
+    getHistoryMessages,
+    getFriendAvatr
 }
