@@ -137,6 +137,13 @@ export default {
     .tabs::v-deep .el-tabs__item{
         height: 20px;
         bottom: 10px;
+        font-size: larger;
+    }
+    .tabs::v-deep .el-tabs__item:hover{
+        color: blueviolet;
+    }
+    .tabs::v-deep .el-tabs__item.is-active{
+        color: blueviolet;
     }
     .chatmanager{
         height: 100vh;

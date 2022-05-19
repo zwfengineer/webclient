@@ -82,6 +82,8 @@ export default {
     height: 50%;
     overflow-y: scroll;
     overflow-x: hidden;
+    background-image: url(../assets/space.jpg);
+    background-position-x: center;
     /* background-color: green; */
 
 }

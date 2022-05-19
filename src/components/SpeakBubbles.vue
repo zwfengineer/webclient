@@ -118,4 +118,18 @@ export default {
 .bubbles::v-deep .w-e-text-container{
     word-break: keep-all;
 }
+.idbox{
+    position: relative;
+    top: -20px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.idbox span{
+    // color: red;
+    border-radius: 40px;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    padding: 2px 2px;
+    font-size: smaller;
+}
 </style>

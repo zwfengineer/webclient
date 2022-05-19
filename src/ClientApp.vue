@@ -1,7 +1,12 @@
 <template>
+    
+    <div class="component">
+    <component :is="viewcomponent" :back="back"></component>
+    </div>
+    <div class="mask"></div>
     <div class="background">
-      <component :is="viewcomponent" :back="back"></component>
-    </div>                                           
+    </div>
+                                       
 </template>
 <script>
 import LoginView from './components/LoginView'
@@ -108,15 +113,39 @@ export default {
 </script>
 
 <style>
-.background{
-  background-image: url('./assets/loginback4.jpg');
-  background-position-y: 50%;
-  background-repeat: round;
-  background-size: 100%;
-  min-height: 100vh;
-}
 *{
   padding: 0;
   margin:0;
+}
+.background{
+  background-image: url('./assets/loginback4.jpg');
+  z-index: 1;
+  background-position-y: 50%;
+  background-repeat: round;
+  background-size: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+
+}
+.component{
+  z-index:2;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left:0;
+}
+.mask{
+  z-index:0;
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
+  top: 0;
+  left:0;
+  background-color: whitesmoke;
+  opacity: 65%;
 }
 </style>
