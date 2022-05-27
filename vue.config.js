@@ -5,8 +5,6 @@ module.exports = defineConfig( {
   lintOnSave: false,
   //非运行时只支持h函数生成的模板！！！！
   runtimeCompiler: true,
-  //debug去掉hash值
-  // filenameHashing:false,
   //使用scss控制css样式
   pluginOptions: {
     'style-resources-loader': {

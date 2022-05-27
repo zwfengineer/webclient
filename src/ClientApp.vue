@@ -48,9 +48,9 @@ export default {
     connect(){
       // 调用websocketutil的wsclients,创建连接并管理
       this.wsclient = wsclients.create("/wsapi")
-      addEventListener('wsmessage',(data)=>{
+      // addEventListener('wsmessage',()=>{
         // console.log(data.detail)
-      })
+      // })
       // window.wsclient =this.wsclient;
     },
     cleanCookie(){

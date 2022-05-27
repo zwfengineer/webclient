@@ -181,6 +181,7 @@ export default {
 }
 .loginbox{
     max-width: 40%;
+    min-width:450px;
     height: 50%;
     margin:0  auto;
     text-align: center;

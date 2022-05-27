@@ -1,7 +1,6 @@
 import { ESMap } from "typescript";
 import { getHistoryMessages } from "./axiosutil";
 import { messagedatabasemanager, Message, Messages } from "./messagedatabase";
-import { NewMessageEvent } from "./CustomEvent"
 
 
 const loadofflinehistorymessage = ()=>{
@@ -27,9 +26,13 @@ const sessionloadhistory=async (id:string,callback?:any)=>{
 const savemessage = async function(id:string,message:Message):Promise<void>{
     let messages:Messages=new Messages(id);
     messagedatabasemanager.messages.get(id).then((tablemessages:Messages|undefined)=>{
-        tablemessages?.Messagelist?.shift();
-        tablemessages?.Messagelist?.push(message)
-        messages.Messagelist=tablemessages?.Messagelist;
+        if(tablemessages?.Messagelist == undefined){
+            messages.Messagelist=[message]
+        }else{
+            tablemessages?.Messagelist?.shift();
+            tablemessages?.Messagelist?.push(message)
+            messages.Messagelist=tablemessages?.Messagelist;
+        }
     }).catch((error:Error)=>{
         console.log(error.message)
         messages.Messagelist=[message]
