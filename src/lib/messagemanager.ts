@@ -6,7 +6,7 @@ import { messagedatabasemanager, Message, Messages } from "./messagedatabase";
 const loadofflinehistorymessage = ()=>{
         getHistoryMessages((data:ESMap<string,Array<object>>)=>{
             data.forEach((arrdata,key)=>{
-                let messages:Array<Message>=new Array<Message>();
+                const messages:Array<Message>=new Array<Message>();
                 arrdata.forEach((value)=>{
                     messages.push(new Message(value))
                 })
@@ -24,7 +24,7 @@ const sessionloadhistory=async (id:string,callback?:any)=>{
     callback(historymessages?.Messagelist)
 }
 const savemessage = async function(id:string,message:Message):Promise<void>{
-    let messages:Messages=new Messages(id);
+    const messages:Messages=new Messages(id);
     messagedatabasemanager.messages.get(id).then((tablemessages:Messages|undefined)=>{
         if(tablemessages?.Messagelist == undefined){
             messages.Messagelist=[message]

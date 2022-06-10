@@ -12,7 +12,7 @@ export class Friend{
                 this.avatar=data;
             })
         }
-    };
+    }
     id!:String;
     username!:String;
     phonenum!:String;

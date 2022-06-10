@@ -16,6 +16,6 @@ module.exports = defineConfig( {
     devtool: 'source-map',
     },
   devServer:{
-    port:1938
-  }
+    port:2000
+  },
 })

@@ -78,7 +78,13 @@ export default {
         MENU_CONF:{}
     };
     editorConfig.MENU_CONF['uploadImage']={
-      server:''
+      fieldName:"file",
+      server:"https://192.168.10.1:1258/putfile"
+    }
+    editorConfig.MENU_CONF['uploadVideo']={
+      fieldName:"file",
+      server:"https://192.168.10.1:1258/putfile",
+      maxFileSize: 1024*1024*1024
     }
     // 组件销毁时，也及时销毁编辑器，重要！
     onBeforeUnmount(() => {
@@ -106,7 +112,7 @@ export default {
         let editor = editorRef.value;
         if(editor!=null){
           let data = editor.getText()
-            if(data.trim()!=''){
+            if(data.trim()!='' || (editor.getHtml() !='<p><br></p>') ){
               props.send(editor.getHtml())
               editor.select([])
               editor.deleteFragment()
