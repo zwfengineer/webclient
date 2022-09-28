@@ -14,11 +14,14 @@ const baseAxios = axios.create({
     baseURL:"https://"+host,
     withCredentials:true,
  })
-const cookie= {
-    get: (name) => Cookies.get(name),
-    set: (name, value, options) => Cookies.set(name, value, options),
-    remove: (name, options) => Cookies.remove(name, options),
-    getAll: () => Cookies.get()
+let cookie=getcookie()
+function getcookie(){
+    return {
+        get: (name) => Cookies.get(name),
+        set: (name, value, options) => Cookies.set(name, value, options),
+        remove: (name, options) => Cookies.remove(name, options),
+        getAll: () => Cookies.get()
+    }
 }
 
 const messageType={

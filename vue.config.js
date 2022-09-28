@@ -10,6 +10,11 @@ module.exports = defineConfig( {
     'style-resources-loader': {
       preProcessor: 'sass',
       patterns: []
+    },
+    electronBuilder:{
+      builderOptions:{
+        
+      }
     }
   },
   configureWebpack: {

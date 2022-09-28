@@ -4,7 +4,7 @@
     <component :is="viewcomponent" :back="back"></component>
     </div>
     <div class="mask"></div>
-    <div class="background">
+    <div class="background" style="ba ckimg">
     </div>
                                        
 </template>
@@ -16,6 +16,7 @@ import {wsclients} from './lib/websocketutil'
 import { cookie, flushfriendlist, getuser } from './lib/util'
 import {initialize} from "./lib/messagedatabase"
 import { loadofflinehistorymessage } from './lib/messagemanager'
+import img from "./assets/loginback4.jpg"
 export default {
   name:'ClientApp',
   components:{
@@ -26,7 +27,10 @@ export default {
     return{
       login:false,
       user:null,
-      wsclient:WebSocket
+      wsclient:WebSocket,
+      backimg:{
+        "background-image":img
+      }
     }
   },
   methods:{
@@ -111,15 +115,14 @@ export default {
   },
 }
 </script>
-
-<style>
+<style lang="scss">
 *{
   padding: 0;
   margin:0;
 }
 .background{
-  background-image: url('./assets/loginback4.jpg');
   z-index: 1;
+  background-image: url("../src/assets/loginback4.jpg");
   background-position-y: 50%;
   background-repeat: round;
   background-size: 100%;
