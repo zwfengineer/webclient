@@ -1,10 +1,11 @@
 <template>
     
     <div class="component">
-    <component :is="viewcomponent" :back="back"></component>
-    </div>
-    <div class="mask"></div>
-    <div class="background" style="ba ckimg">
+      <!-- <img src="../src/assets/loginback4.jpg" alt="xxx"> -->
+      <component :is="viewcomponent" :back="back"></component>
+      </div>
+      <div class="mask"></div>
+      <div class="background" style="backimg">
     </div>
                                        
 </template>
