@@ -1,11 +1,10 @@
 <template>
     
     <div class="component">
-      <!-- <img src="../src/assets/loginback4.jpg" alt="xxx"> -->
       <component :is="viewcomponent" :back="back"></component>
       </div>
       <div class="mask"></div>
-      <div class="background" style="backimg">
+      <div class="background">
     </div>
                                        
 </template>
@@ -17,7 +16,6 @@ import {wsclients} from './lib/websocketutil'
 import { cookie, flushfriendlist, getuser } from './lib/util'
 import {initialize} from "./lib/messagedatabase"
 import { loadofflinehistorymessage } from './lib/messagemanager'
-import img from "./assets/loginback4.jpg"
 export default {
   name:'ClientApp',
   components:{
@@ -29,9 +27,6 @@ export default {
       login:false,
       user:null,
       wsclient:WebSocket,
-      backimg:{
-        "background-image":img
-      }
     }
   },
   methods:{
@@ -66,6 +61,7 @@ export default {
   setup(){
   },
   mounted(){
+    console.log(img)
     // 刷新重连
     if (cookie.get("Logined")){
       this.user = JSON.parse(cookie.get("User"))
@@ -123,7 +119,7 @@ export default {
 }
 .background{
   z-index: 1;
-  background-image: url("../src/assets/loginback4.jpg");
+  background-image: url("./assets/loginback4.jpg");
   background-position-y: 50%;
   background-repeat: round;
   background-size: 100%;

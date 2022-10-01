@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-module.exports = defineConfig( {
+module.exports = defineConfig({
   transpileDependencies: true,
   //解决未经使用的变量问题
   lintOnSave: false,
@@ -12,9 +12,7 @@ module.exports = defineConfig( {
       patterns: []
     },
     electronBuilder:{
-      builderOptions:{
-        
-      }
+      customFileProtocol:"./"
     }
   },
   configureWebpack: {

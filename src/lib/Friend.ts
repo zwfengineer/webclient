@@ -1,21 +1,28 @@
 import { getFriendAvatr } from "./axiosutil";
+export interface FriendBase {
+  id: string;
+  username: string;
+  phonenum: string;
+  gender: string;
+  avatar: string;
+}
 
-export class Friend{
-    constructor(object:any){
-        this.id=object.fid;
-        this.username=object.username;
-        this.avatar=object.avatar;
-        this.gender=object.gender;
-        this.phonenum = object.phonenum;
-        if (object.avatar== undefined){
-            getFriendAvatr(this.id,(data:any)=>{
-                this.avatar=data;
-            })
-        }
+export class Friend implements FriendBase {
+  constructor(object: any) {
+    this.id = object.fid;
+    this.username = object.username;
+    this.avatar = object.avatar;
+    this.gender = object.gender;
+    this.phonenum = object.phonenum;
+    if (object.avatar == undefined) {
+      getFriendAvatr(this.id, (data: any) => {
+        this.avatar = data;
+      });
     }
-    id!:String;
-    username!:String;
-    phonenum!:String;
-    gender!:string;
-    avatar!:string;
+  }
+  id: string;
+  username: string;
+  phonenum: string;
+  gender: string;
+  avatar: string;
 }
