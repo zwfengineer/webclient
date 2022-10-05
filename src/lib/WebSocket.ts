@@ -8,18 +8,34 @@ import {
   addfriendevent,
   repeataddfriendrequestevent,
   wsonline,
+  host as defaulthost,
+  protol as protocols
 } from "./util";
 
+// WebSocket 管理模块
+// 功能跟介绍， wsLink, 对WebSocket使用的URL参数的简单包装
+//             WebSocketLink，对WebSocket类的简单包装,以及添加WebSocket事件监听回调
+//             WebSocketLinks，WebSocket 的Key-Value 键值对
+//             WebSocketClient，WebSocketLink 管理类，统一处理WebSocket相关类
+
 export class wsLink {
-  protol: string | undefined;
+  protocol: string | undefined;
   path: string;
+  host: string;
   port: string | undefined;
-  constructor(path: string, port: string = "1258") {
+  constructor(
+    protocol: string = protocols.wss,
+    path: string,
+    port: string = "1258",
+    host: string = defaulthost
+  ) {
+    this.protocol = protocol
+    this.host = host;
     this.path = path;
     this.port = port;
   }
   get() {
-    return this.protol + this.path + this.port;
+    return this.protocol + this.host + this.path + this.port;
   }
 }
 
@@ -41,12 +57,12 @@ export class WebSocketLink {
     });
 
     this.wsc.addEventListener("open", () => {
-        opencb(this.path)
+      opencb(this.path, this);
     });
 
     this.wsc.addEventListener("error", (error) => {
       console.log(error);
-      errorcb(this.path)
+      errorcb(this.path);
       dispatchEvent(wslinkerror(error));
     });
     this.wsc.onmessage = (msg) => {
@@ -80,21 +96,28 @@ export class WebSocketLink {
   }
 }
 
-type WebSocketLinks = Map<wsLink, WebSocketLink>;
+export type WebSocketLinks = Map<wsLink, WebSocketLink>;
 
-class WebSocketClient {
+export class WebSocketClient {
   Links: WebSocketLinks;
   constructor() {
     this.Links = new Map<wsLink, WebSocketLink>();
   }
-  closelink(path:wsLink){
-    this.Links.delete(path)
+  closelink(path: wsLink) {
+    this.Links.delete(path);
   }
-  errorlink(path:wsLink){
-
+  errorlink(path: wsLink) {
+    this.closelink(path);
   }
-  openlink(path:wsLink){
-    
+  openlink(path: wsLink, wslink: WebSocketLink) {
+    this.Links.set(path, wslink);
+  }
+  createLink(path: wsLink) {
+    if (this.Links.has(path)) {
+      return this.Links.get(path);
+    } else {
+      new WebSocketLink(path, this.closelink, this.openlink, this.errorlink);
+    }
   }
 }
 

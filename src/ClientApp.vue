@@ -61,7 +61,6 @@ export default {
   setup(){
   },
   mounted(){
-    console.log(img)
     // 刷新重连
     if (cookie.get("Logined")){
       this.user = JSON.parse(cookie.get("User"))

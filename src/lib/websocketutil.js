@@ -20,6 +20,48 @@ const wsclients = {
   create: function (path) {
     console.log("open:", this.openlink, this.checkrepat(path));
     if (this.checkrepat(path)) {
+      this.path = path;
+      this.wsc = new WebSocket(protol.wss + host + path);
+      this.wsc.addEventListener("close", (error) => {
+        this.openlink.delete(this.path);
+        dispatchEvent(wsoffline(error.code));
+        //匿名函数才能访问上级的对象
+      });
+      this.wsc.addEventListener("open", () => {});
+      this.wsc.addEventListener("error", (error) => {
+        console.log(error);
+        dispatchEvent(wslinkerror(error.code));
+      });
+      this.wsc.onmessage = (msg) => {
+        dispatchEvent(wsmessage(JSON.parse(msg.data)));
+        let data = JSON.parse(msg.data);
+        if (data.messageType != messageType.Heart) {
+          console.log(data);
+        }
+        if (
+          data.messageType == messageType.ServerPush &&
+          data.dataType == dataType.Directive
+        ) {
+          switch (data.data) {
+            case "addfriendevent":
+              dispatchEvent(addfriendevent());
+              break;
+            case "addfriendrequestevent":
+              dispatchEvent(repeataddfriendrequestevent());
+              break;
+            case "useronline":
+              dispatchEvent(wsonline());
+              break;
+            default:
+              break;
+          }
+        }
+        if (data.messageType == messageType.UserMessage) {
+          repeat(data);
+        }
+      };
+      this.openlink.set(path, this);
+
       return this.wsc;
     } else {
       return this.openlink.get(path).wsc;
