@@ -17,9 +17,9 @@ const baseAxios = axios.create({
 let cookie=getcookie()
 function getcookie(){
     return {
-        get: (name) => Cookies.get(name),
-        set: (name, value, options) => Cookies.set(name, value, options),
-        remove: (name, options) => Cookies.remove(name, options),
+        get: (name:string) => Cookies.get(name),
+        set: (name:string, value:string, options:any) => Cookies.set(name, value, options),
+        remove: (name:any, options?:any) => Cookies.remove(name, options),
         getAll: () => Cookies.get()
     }
 }
@@ -44,24 +44,24 @@ const dataType={
 }
 
 
-function friendlistevent(data) {
+function friendlistevent(data:any) {
     return new CustomEvent("friendlistevent",{
         detail:data
     })
 }
-function wsoffline(data){
+function wsoffline(data:any){
     return new CustomEvent('wsoffline',{
         detail:data
     })
 }
 
-function wslinkerror(data){
+function wslinkerror(data:any){
     return new CustomEvent("wslinkerror",{
         detail:data
     })
 }
 
-function wsmessage(data){
+function wsmessage(data:any){
     return new CustomEvent('wsmessage',{
         detail:data
     })
@@ -86,7 +86,7 @@ function repeataddfriendrequestevent(){
     return new Event("repeataddfriendrequestevent")
 }
 
-function checkPhoneNumber(Number,country) {
+function checkPhoneNumber(Number:any,country:any) {
     let errorlist = new Array()
     let phonenumber = parsePhoneNumber(Number,country)
     if (phonenumber){
@@ -106,7 +106,7 @@ function checkPhoneNumber(Number,country) {
     }
     return true
 }
-function checkUser(data){
+function checkUser(data:any){
     var alertlist = new Array()
     for(var k in data){
         if (data[k].length == 0){
@@ -120,7 +120,7 @@ function checkUser(data){
     return true
 }
 
-function getavatarsrc(avatar) {
+function getavatarsrc(avatar:any) {
     if(avatar!=undefined){
         return require('../assets/defaultuser/'+avatar+".jpg")
     }else{
@@ -144,7 +144,11 @@ function logout() {
 
 
 function getuser(){
-    return  JSON.parse(cookie.get("User"))
+    let data = cookie.get("User")
+    if(data){
+        return JSON.parse(data)
+    }
+    return undefined
 }
 
 

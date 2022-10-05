@@ -3,22 +3,23 @@ import {sessionloadhistory,savemessage} from "./messagemanager"
 import {NewMessageEvent} from "./CustomEvent"
 import { wsclients } from "./websocketutil"
 import {Base64} from 'js-base64'
-import { Message } from "./messagedatabase"
+import { Message, Messages } from "./messagedatabase"
+import { Friend } from "./Friend"
 
 const activeSessions = new Map()
 const updatechat=new Event("updatechat")
 
-function sessionDestory(data)  {
+function sessionDestory(data:any)  {
     return new CustomEvent("sessionDestory",{
         detail:data
     })
 } 
-function sessionactive(data){
+function sessionactive(data:any){
     return new CustomEvent("sessionActive",{
         detail:data
     })
 }
-function repeat(message){
+function repeat(message:Message){
     savemessage(message.from,message)
     dispatchEvent(NewMessageEvent({
         id:message.from,
@@ -34,7 +35,14 @@ function repeat(message){
 }
 
 class Session{
-    constructor(friend){
+    name:string;
+    id:string;
+    friend:Friend;
+    dormancy:boolean;
+    messages:Message[];
+    user:any;
+
+    constructor(friend:any){
         this.name=friend.username
         this.id=friend.id
         this.friend = friend
@@ -46,8 +54,8 @@ class Session{
         activeSessions.set(this.id,this)
         dispatchEvent(updatechat)
     }
-    loadhistory(id){
-        sessionloadhistory(id,(data)=>{
+    loadhistory(id:any){
+        sessionloadhistory(id,(data:Message[])=>{
             for(let message of data){
                 this.messages.push(message)
             }
@@ -57,7 +65,7 @@ class Session{
     active(){
         dispatchEvent(sessionactive(this.id))
     }
-    send(data){
+    send(data:string){
         let message = new Message({
             from:this.user.uid,
             to:this.id,

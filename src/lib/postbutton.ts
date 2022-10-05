@@ -1,18 +1,20 @@
 import {  DomEditor, t } from '@wangeditor/core'
 // 定义菜单 class
 class PostButton{
+  title:string = t("发送")
+  tag:string = "button"
   constructor(){
     this.title = t("发送")
     this.tag = "button"
   }
-  getValue(editor){
+  getValue(editor:any){
     return ''
   }
-  isActive(editor){
+  isActive(editor:any){
     const node = DomEditor.getSelectedNodeByType(editor,'postbutton')
     return !!node
   }
-  isDisabled(editor){
+  isDisabled(editor:any){
     if (editor.getHtml() !=null){
       return false
     }else{
@@ -20,7 +22,7 @@ class PostButton{
     }
   }
 
-  exec(editor){
+  exec(editor:any){
     editor.emit("postbuttonclick")
   }
     // 菜单配置，参考“引用”菜单源码

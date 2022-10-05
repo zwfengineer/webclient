@@ -12,12 +12,12 @@ export class Message {
     tojson(){
         return JSON.stringify(this)
     }
-    from!: String;
-    to!: String;
+    from!: string;
+    to!: string;
     data?: Object | undefined;
     unixTime!: Date;
-    messageType!: String;
-    dataType!: String;
+    messageType!: string;
+    dataType!: string;
 }
 export class Messages{
     constructor(id:string,messagelist?:Message[]){
