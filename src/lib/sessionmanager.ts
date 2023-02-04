@@ -1,10 +1,10 @@
 import { dataType, getuser, messageType } from "./util"
 import {sessionloadhistory,savemessage} from "./messagemanager"
 import {NewMessageEvent} from "./CustomEvent"
-import { wsclients } from "./websocketutil"
 import {Base64} from 'js-base64'
 import { Message, Messages } from "./messagedatabase"
 import { Friend } from "./Friend"
+import { WebSocketLink, WSClient, wsLink } from "./WebSocket"
 
 const activeSessions = new Map()
 const updatechat=new Event("updatechat")
@@ -74,10 +74,17 @@ class Session{
             unixTime:new Date(),
             data:Base64.encode(data)
         })
-        let connnect = wsclients.create("/wsapi")
-        connnect.send(message.tojson())
-        this.messages.push(message)
-        savemessage(this.id,message)
+        try{
+            let connnect = WSClient.createLink(new wsLink("/wsapi"))
+            connnect.send(message.tojson())
+            this.messages.push(message)
+            savemessage(this.id,message)
+        }catch(e){
+            console.log(e)
+        }finally{
+            
+        }
+
     }
 }
 export {
