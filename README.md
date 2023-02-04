@@ -24,4 +24,3 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-此项目将会在近期关闭
