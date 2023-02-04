@@ -13,22 +13,31 @@ import {
   addfriendevent,
   repeataddfriendrequestevent,
 } from "./util";
-const wsclients = {
-  wsc: WebSocket,
-  path: String,
-  openlink: new Map(),
-  create: function (path) {
+
+type WSClients = {
+  wsc?: WebSocket;
+  path?: string;
+  openlink: Map<string, WSClients>;
+  create: Function;
+  checkrepat: Function;
+};
+
+const wsclients: WSClients = {
+  openlink: new Map<string, WSClients>(),
+  create: function (path: any) {
     console.log("open:", this.openlink, this.checkrepat(path));
     if (this.checkrepat(path)) {
       this.path = path;
       this.wsc = new WebSocket(protol.wss + host + path);
-      this.wsc.addEventListener("close", (error) => {
-        this.openlink.delete(this.path);
+      this.wsc.addEventListener("close", (error: any) => {
+        if (this.path) {
+          this.openlink.delete(this.path);
+        }
         dispatchEvent(wsoffline(error.code));
         //匿名函数才能访问上级的对象
       });
       this.wsc.addEventListener("open", () => {});
-      this.wsc.addEventListener("error", (error) => {
+      this.wsc.addEventListener("error", (error: any) => {
         console.log(error);
         dispatchEvent(wslinkerror(error.code));
       });
@@ -64,10 +73,10 @@ const wsclients = {
 
       return this.wsc;
     } else {
-      return this.openlink.get(path).wsc;
+      return this.openlink.get(path)?.wsc;
     }
   },
-  checkrepat(path) {
+  checkrepat(path: any) {
     for (var p of this.openlink.keys()) {
       if (p == path) {
         return false;
@@ -76,11 +85,11 @@ const wsclients = {
     return true;
   },
 };
-function post(data, fid) {
-  server = wsclients.create("/wsapi");
+function post(data: any, fid: any) {
+  let server = wsclients.create("/wsapi");
   server.send();
 }
-function postaddfriendrequest(data, fid) {
+function postaddfriendrequest(data: any, fid: any) {
   let server = wsclients.create("/wsapi");
   let message = new Message({
     from: getuser().uid,
