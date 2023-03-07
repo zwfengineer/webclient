@@ -1,3 +1,4 @@
+import { WSClient, wsLink } from "./WebSocket";
 import { Message } from "./messagedatabase";
 import { repeat } from "./sessionmanager";
 import {
@@ -28,7 +29,8 @@ const wsclients: WSClients = {
     console.log("open:", this.openlink, this.checkrepat(path));
     if (this.checkrepat(path)) {
       this.path = path;
-      this.wsc = new WebSocket(protol.wss + host + path);
+      // this.wsc = new WebSocket(protol.wss + host + path);
+      this.wsc = WSClient.createLink(new wsLink(this.path!)).wsc;
       this.wsc.addEventListener("close", (error: any) => {
         if (this.path) {
           this.openlink.delete(this.path);

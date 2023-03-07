@@ -75,7 +75,7 @@ class Session{
             data:Base64.encode(data)
         })
         try{
-            let connnect = WSClient.createLink(new wsLink("/wsapi"))
+            let connnect = WSClient.createLink(new wsLink("/wsapi")).wsc
             connnect.send(message.tojson())
             this.messages.push(message)
             savemessage(this.id,message)
